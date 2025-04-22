@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Email Spam Classifier</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="https://img.icons8.com/ios/50/000000/spam.png" type="image/png">
+  <style>
+    :root {
+      --bg-color: #f0f4f8;
+      --card-color: #ffffff;
+      --text-color: #333;
+      --accent-color: #00796B;
+      --button-hover-color: #004d40;
+      --input-bg: #f9f9f9;
+      --input-text-color: #333;
+      --heading-color: #FF6347;
+    }
+
+    body.dark-mode {
+      --bg-color: #121212;
+      --card-color: #1e1e1e;
+      --text-color: #eeeeee;
+      --accent-color: #4db6ac;
+      --button-hover-color: #00796B;
+      --input-bg: #333;
+      --input-text-color: #eeeeee;
+      --heading-color: #FF6347;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 700px;
+      background-color: var(--card-color);
+      padding: 30px;
+      margin-top: 40px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .toggle-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: transparent;
+      border: none;
+      font-size: 1.4rem;
+      cursor: pointer;
+      color: var(--accent-color);
+    }
+
+    .toggle-btn:hover {
+      color: var(--button-hover-color);
+    }
+
+    h1 {
+      color: var(--accent-color);
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    .prediction-result {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--heading-color);
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .email-icon {
+      display: block;
+      width: 80px;
+      margin: 0 auto 10px;
+    }
+
+    .form-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    textarea {
+      padding: 15px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      resize: vertical;
+      min-height: 150px;
+      background: var(--input-bg);
+      color: var(--input-text-color);
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    textarea:focus {
+      border-color: var(--accent-color);
+      outline: none;
+    }
+
+    button {
+      padding: 12px 30px;
+      background-color: var(--accent-color);
+      color: white;
+      border: none;
+      border-radius: 25px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    button:hover {
+      background-color: var(--button-hover-color);
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      button {
+        font-size: 0.9rem;
+      }
+
+      textarea {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <button class="toggle-btn" type="button" onclick="toggleDarkMode()">🌙</button>
+
+    {% if prediction %}
+      <h2 class="prediction-result">
+        {% if prediction == "Spam" %}
+          🚫 {{ prediction }}
+        {% elif prediction == "Not Spam" %}
+          ✅ {{ prediction }}
+        {% else %}
+          {{ prediction }}
+        {% endif %}
+      </h2>
+    {% endif %}
+
+    <img src="https://img.icons8.com/ios/50/000000/spam.png" alt="Spam Icon" class="email-icon">
+    <h1>📧 Email Spam Classifier</h1>
+
+    <form class="form-section" action="/predict" method="POST">
+      <label for="message"><strong>Paste your email text:</strong></label>
+      <textarea name="message" id="message" placeholder="e.g. Congratulations! You've won a free iPhone..." required></textarea>
+      <button type="submit">🚀 Check for Spam</button>
+    </form>
+  </div>
+
+  <script>
+    function toggleDarkMode() {
+      const isDark = document.body.classList.toggle("dark-mode");
+      localStorage.setItem("darkMode", isDark);
+    }
+
+    window.onload = () => {
+      const dark = localStorage.getItem("darkMode") === "true";
+      if (dark) {
+        document.body.classList.add("dark-mode");
+      }
+    };
+  </script>
+</body>
+</html>
