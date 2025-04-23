@@ -1,0 +1,8 @@
+services:
+  - type: web
+    name: spam-detector
+    env: python
+    branch: main
+    buildCommand: ""
+    startCommand: gunicorn app:app
+    autoDeploy: true
