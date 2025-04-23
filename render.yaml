@@ -4,6 +4,6 @@ services:
     env: python
     buildCommand: |
       pip install -r requirements.txt
-      python -m nltk.downloader -d ./nltk_data punkt stopwords
+      python -m nltk.downloader punkt stopwords
     startCommand: python app.py
     autoDeploy: true
