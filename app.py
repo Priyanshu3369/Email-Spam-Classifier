@@ -6,6 +6,9 @@ from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 import os
 
+# Ensure NLTK data is downloaded only once (at build time)
+nltk.data.path.append('./nltk_data')
+
 # Initialize Flask app
 app = Flask(__name__)
 
@@ -41,23 +44,23 @@ def transform_text(text):
 
     return " ".join(y)
 
-# Define route for the home page
+# Home route
 @app.route('/')
 def home():
     return render_template('index.html')
 
-# Define route for the prediction
-from flask import redirect, url_for, session
-
+# Predict route with error display
 @app.route('/predict', methods=['POST'])
 def predict():
-    input_sms = request.form['message']
-    transformed_sms = transform_text(input_sms)
-    vector_input = tfidf.transform([transformed_sms])
-    result = model.predict(vector_input)[0]
-    prediction = 'Spam' if result == 1 else 'Not Spam'
-    return render_template('index.html', prediction=prediction)
-
+    try:
+        input_sms = request.form['message']
+        transformed_sms = transform_text(input_sms)
+        vector_input = tfidf.transform([transformed_sms])
+        result = model.predict(vector_input)[0]
+        prediction = 'Spam' if result == 1 else 'Not Spam'
+        return render_template('index.html', prediction=prediction)
+    except Exception as e:
+        return f"<h2>🔥 ERROR: {str(e)}</h2>"
 
 # Run the Flask app
 if __name__ == "__main__":
