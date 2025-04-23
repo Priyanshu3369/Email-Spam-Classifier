@@ -67,7 +67,7 @@ python app.py
 By default, the app runs on:
 
 ```
-[http://127.0.0.1:5000/](https://email-spam-classifier-0ar4.onrender.com/predict)
+[http://127.0.0.1:5000/](https://email-spam-classifier-0ar4.onrender.com)
 ```
 
 ---
