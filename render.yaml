@@ -4,5 +4,5 @@ services:
     env: python
     branch: main
     buildCommand: ""
-    startCommand: gunicorn app:app
+    startCommand: python app.py
     autoDeploy: true
