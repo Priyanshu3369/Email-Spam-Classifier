@@ -6,10 +6,6 @@ from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 import os
 
-# Ensure NLTK data is downloaded only once (at build time)
-nltk.download('punkt')
-nltk.download('punkt_tab')
-
 # Initialize Flask app
 app = Flask(__name__)
 
@@ -21,29 +17,37 @@ tfidf = pickle.load(open('vectorizer.pkl', 'rb'))
 model = pickle.load(open('model.pkl', 'rb'))
 
 # Function to preprocess and transform the input text
+import nltk
+from nltk.corpus import stopwords
+import string
+
+nltk.download('stopwords')
+nltk.download('punkt')
+nltk.download('punkt_tab')
+
+
 def transform_text(text):
-    text = text.lower()
-    text = nltk.word_tokenize(text)
+  text = text.lower()
+  text = nltk.word_tokenize(text)
+  y = []
+  for i in text:
+    if i.isalnum():
+      y.append(i)
 
-    y = []
-    for i in text:
-        if i.isalnum():
-            y.append(i)
+  text = y[:]
+  y.clear()
 
-    text = y[:]
-    y.clear()
+  for i in text:
+    if i not in stopwords.words('english') and i not in string.punctuation:
+      y.append(i)
 
-    for i in text:
-        if i not in stopwords.words('english') and i not in string.punctuation:
-            y.append(i)
+  text = y[:]
+  y.clear()
 
-    text = y[:]
-    y.clear()
+  for i in text:
+    y.append(ps.stem(i))
 
-    for i in text:
-        y.append(ps.stem(i))
-
-    return " ".join(y)
+  return " ".join(y)
 
 # Home route
 @app.route('/')
