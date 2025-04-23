@@ -74,7 +74,7 @@ By default, the app runs on:
 
 ### 🌐 Step 5: Access the App
 
-1. Open your browser and go to: [http://127.0.0.1:5000/](https://email-spam-classifier-0ar4.onrender.com/predict)
+1. Open your browser and go to: [Live Demo](https://email-spam-classifier-0ar4.onrender.com/predict)
 2. Paste an email message into the textbox.
 3. Click **Check for Spam**.
 4. View the prediction displayed at the top as a beautiful heading 🎯
