@@ -7,7 +7,8 @@ from nltk.stem.porter import PorterStemmer
 import os
 
 # Ensure NLTK data is downloaded only once (at build time)
-nltk.data.path.append('./nltk_data')
+nltk.download('punkt')
+nltk.download('punkt_tab')
 
 # Initialize Flask app
 app = Flask(__name__)
